@@ -7,7 +7,7 @@ const OPTION_INTERVAL_END = '[Op02]'
 
 client.subscribe(TOPIC_NAME)
 client.on('message', function (topic, message) {
-    console.log("topic : " + topic.toString() + " message : " + message.toString())
+    console.log("[" + topic.toString() + "]message : " + message.toString())
     if (message.toString().startsWith(OPTION_INTERVAL_START))
         startInterval()
     else if (message.toString().startsWith(OPTION_INTERVAL_END))

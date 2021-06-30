@@ -8,22 +8,28 @@ const OPTION_INTERVAL_END = '[Op02]'
 client.subscribe(TOPIC_NAME)
 client.on('message', function (topic, message) {
     console.log("[" + topic.toString() + "]message : " + message.toString())
-    if (message.toString().startsWith(OPTION_INTERVAL_START))
+    if (message.toString().startsWith(OPTION_INTERVAL_START)) {
         startInterval()
-    else if (message.toString().startsWith(OPTION_INTERVAL_END))
+        return
+    }
+
+    if (message.toString().startsWith(OPTION_INTERVAL_END)) {
         endInterval()
+        return
+    }
 })
 
-var timerId = null
+let timerId = null
 function startInterval() {
-    if (timerId == null)
+    if (timerId == null) {
         timerId = setInterval(
             () => {
-                let rndStr = Math.random().toString(36).substr(2, 11)
+                const rndStr = Math.random().toString(36).substr(2, 11)
                 client.publish(TOPIC_NAME, "[Server] " + rndStr)
             },
             2000
         )
+    }
 }
 
 function endInterval() {
